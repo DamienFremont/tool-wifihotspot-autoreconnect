@@ -29,15 +29,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class WifiAutoConnectTest {
+public class SFRAutoConnectTest {
 
 	int PAGE_TIMEOUT_SEC = 5;
 
 	WebDriver driver;
 	WebDriverWait wait;
-	
+
 	// DRIVER
-	
+
 	@Before
 	public void setUp() throws Exception {
 
@@ -85,32 +85,33 @@ public class WifiAutoConnectTest {
 		};
 		wait.until(e);
 	}
-	
+
 	// LOGIN
-	
+
 	@Before
 	public void setUpLogin() throws Exception {
 		Properties prop = new Properties();
-		InputStream in = getClass().getClassLoader().getResourceAsStream("cred.properties");
+		InputStream in = getClass().getClassLoader().getResourceAsStream(
+				"cred.properties");
 		prop.load(in);
 		in.close();
-		
+
 		USERNAME = prop.getProperty("sfr.wifi.login");
 		PASSWORD = prop.getProperty("sfr.wifi.pass");
 	}
-	
+
 	String USERNAME;
 	String PASSWORD;
 
 	@Test
 	public void test_SFR_Wifi() throws Exception {
-		driver.get(LogonPage.url);
-		assertThat(driver.getCurrentUrl()).isEqualTo(LogonPage.url);
+		driver.get(SFRLogonPage.url);
+		assertThat(driver.getCurrentUrl()).isEqualTo(SFRLogonPage.url);
 		assertThat(element(".headerSFR").isDisplayed()).isTrue();
 
 		logon();
 		waitUntilUrlAsChanged();
-		assertThat(driver.getCurrentUrl()).contains(LogonPage.url);
+		assertThat(driver.getCurrentUrl()).contains(SFRLogonPage.url);
 
 		if (driver.getCurrentUrl().contains("already")) {
 
@@ -124,38 +125,24 @@ public class WifiAutoConnectTest {
 
 			logon();
 			waitUntilUrlAsChanged();
-			assertThat(driver.getCurrentUrl()).contains(LogonPage.url);
+			assertThat(driver.getCurrentUrl()).contains(SFRLogonPage.url);
 		}
 
 		driver.get(TestPage.url);
 		assertThat(driver.getCurrentUrl()).isEqualTo(TestPage.url);
-		assertThat(element(TestPage.search).getAttribute("value")).contains("toto666");
+		assertThat(element(TestPage.search).getAttribute("value")).contains(
+				"toto666");
 	}
-	
+
 	private WebElement element(String cssSelector) {
 		return driver.findElement(By.cssSelector(cssSelector));
 	}
-	
+
 	private void logon() {
-		element(LogonPage.login).sendKeys(USERNAME);
-		element(LogonPage.password).sendKeys(PASSWORD);
-		element(LogonPage.conditions).click();
-		element(LogonPage.connexion).click();
-	}
-	
-	// PAGE PATTERN
-	
-	class LogonPage {
-		static final String url = "https://hotspot.wifi.sfr.fr/";
-
-		static final String login = "#login";
-		static final String password = "#password";
-		static final String conditions = "#conditions";
-		static final String connexion = "input[name='connexion']";
+		element(SFRLogonPage.login).sendKeys(USERNAME);
+		element(SFRLogonPage.password).sendKeys(PASSWORD);
+		element(SFRLogonPage.conditions).click();
+		element(SFRLogonPage.connexion).click();
 	}
 
-	class TestPage {
-		static final String url = "https://www.google.fr/search?q=toto666";
-		static final String search = "input[name='q']";
-	}
 }
