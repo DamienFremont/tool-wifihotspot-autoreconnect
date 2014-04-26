@@ -1,17 +1,17 @@
 package com.dfremont.tool.hotspotautoconnect;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 // TODO hide driver
+// TODO add rule to kill embedded Browser
 public class SFRAutoConnectTest extends AbstractUITest {
 
 	protected void waitUntilUrlAsChanged() {
@@ -33,7 +33,7 @@ public class SFRAutoConnectTest extends AbstractUITest {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		
+
 		Properties prop = new Properties();
 		try (InputStream in = getClass().getClassLoader().getResourceAsStream(
 				"cred.properties");) {
@@ -51,26 +51,26 @@ public class SFRAutoConnectTest extends AbstractUITest {
 		TestPage test = new TestPage(driver);
 
 		driver.get(page.getUrl());
-		assertThat(page.isAt()).isTrue();
+		assertTrue(page.isAt());
 
 		page.logon(USERNAME, PASSWORD);
 		waitUntilUrlAsChanged();
-		assertThat(page.isAt()).isTrue();
+		assertTrue(page.isAt());
 
 		if (driver.getCurrentUrl().contains(page.already)) {
 
 		} else {
 
-			assertThat(page.isError()).isTrue();
+			assertTrue(page.isError());
 			page.closeError();
 
 			page.logon(USERNAME, PASSWORD);
 			waitUntilUrlAsChanged();
-			assertThat(page.isAt()).isTrue();
+			assertTrue(page.isAt());
 		}
 
 		driver.get(test.getUrl());
-		assertThat(test.isAt()).isTrue();
+		assertTrue(test.isAt());
 	}
 
 }
