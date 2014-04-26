@@ -31,29 +31,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SFRAutoConnectTest {
 
+	// DRIVER
 	int PAGE_TIMEOUT_SEC = 5;
-
 	WebDriver driver;
 	WebDriverWait wait;
 
-	// DRIVER
-
 	@Before
 	public void setUp() throws Exception {
-
-		File phantomJsExe = new File("phantomjs-1.9.7-windows/phantomjs.exe");
-		Map<String, Object> caps = new HashMap<>();
-		caps.put(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
-				phantomJsExe.getAbsolutePath());
-		DesiredCapabilities capabilities = new DesiredCapabilities(caps);
-		driver = new PhantomJSDriver(capabilities);
-		Dimension DEFAULT_WINDOW_SIZE = new Dimension(1024, 768);
-		driver.manage().window().setSize(DEFAULT_WINDOW_SIZE);
-
-		// driver = new FirefoxDriver();
+		driver = new WebDriverFactory().get();
 		wait = new WebDriverWait(driver, PAGE_TIMEOUT_SEC);
 	}
 
+	// UTIL
+	
 	@Rule
 	public TestRule testWatcher = new TestWatcher() {
 		@Override
@@ -103,6 +93,8 @@ public class SFRAutoConnectTest {
 	String USERNAME;
 	String PASSWORD;
 
+	// TEST
+	
 	@Test
 	public void test_SFR_Wifi() throws Exception {
 		driver.get(SFRLogonPage.url);
