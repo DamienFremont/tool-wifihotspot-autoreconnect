@@ -8,11 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+// TODO hide driver
 public class SFRAutoConnectTest extends AbstractUITest {
 
 	protected void waitUntilUrlAsChanged() {
@@ -25,18 +24,16 @@ public class SFRAutoConnectTest extends AbstractUITest {
 		};
 		wait.until(e);
 	}
-	
-	private WebElement element(String cssSelector) {
-		return driver.findElement(By.cssSelector(cssSelector));
-	}
-	
+
 	// LOGIN
-	
+
 	String USERNAME;
 	String PASSWORD;
-	
-	@Before
+
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+		
 		Properties prop = new Properties();
 		try (InputStream in = getClass().getClassLoader().getResourceAsStream(
 				"cred.properties");) {
@@ -50,40 +47,30 @@ public class SFRAutoConnectTest extends AbstractUITest {
 
 	@Test
 	public void test_SFR_Wifi() throws Exception {
-		driver.get(SFRLogonPage.url);
-		assertThat(driver.getCurrentUrl()).isEqualTo(SFRLogonPage.url);
-		assertThat(element(".headerSFR").isDisplayed()).isTrue();
+		SFRLogonPage page = new SFRLogonPage(driver);
+		TestPage test = new TestPage(driver);
 
-		logon();
+		driver.get(page.getUrl());
+		assertThat(page.isAt()).isTrue();
+
+		page.logon(USERNAME, PASSWORD);
 		waitUntilUrlAsChanged();
-		assertThat(driver.getCurrentUrl()).contains(SFRLogonPage.url);
+		assertThat(page.isAt()).isTrue();
 
-		if (driver.getCurrentUrl().contains("already")) {
+		if (driver.getCurrentUrl().contains(page.already)) {
 
 		} else {
 
-			assertThat(element("#box").isDisplayed()).isTrue();
-			assertThat(element("#contenuBox").getText()).contains("ERREUR");
+			assertThat(page.isError()).isTrue();
+			page.closeError();
 
-			element("#fermerBox a").click();
-			assertThat(element("#box").isDisplayed()).isFalse();
-
-			logon();
+			page.logon(USERNAME, PASSWORD);
 			waitUntilUrlAsChanged();
-			assertThat(driver.getCurrentUrl()).contains(SFRLogonPage.url);
+			assertThat(page.isAt()).isTrue();
 		}
 
-		driver.get(TestPage.url);
-		assertThat(driver.getCurrentUrl()).isEqualTo(TestPage.url);
-		assertThat(element(TestPage.search).getAttribute("value")).contains(
-				"toto666");
-	}
-
-	private void logon() {
-		element(SFRLogonPage.login).sendKeys(USERNAME);
-		element(SFRLogonPage.password).sendKeys(PASSWORD);
-		element(SFRLogonPage.conditions).click();
-		element(SFRLogonPage.connexion).click();
+		driver.get(test.getUrl());
+		assertThat(test.isAt()).isTrue();
 	}
 
 }
