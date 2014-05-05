@@ -1,6 +1,6 @@
 package com.dfremont.tool.hotspotautoconnect;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -59,6 +59,8 @@ public class SFRAutoConnectTest extends AbstractUITest {
 
 		if (driver.getCurrentUrl().contains(page.already)) {
 
+			fail("deja connecte!");
+			
 		} else {
 
 			assertTrue(page.isError());
