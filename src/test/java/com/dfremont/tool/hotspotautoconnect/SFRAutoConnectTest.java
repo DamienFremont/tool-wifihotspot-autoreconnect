@@ -10,9 +10,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+import com.dfremont.tool.hotspotautoconnect.page.SFRLogonPage;
+import com.dfremont.tool.hotspotautoconnect.page.TestPage;
+
 // TODO hide driver
 // TODO add rule to kill embedded Browser
-public class SFRAutoConnectTest extends AbstractUITest {
+public class SFRAutoConnectTest extends ATest {
 
 	protected void waitUntilUrlAsChanged() {
 		final String previousURL = driver.getCurrentUrl();

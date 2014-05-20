@@ -1,10 +1,10 @@
-package com.dfremont.tool.hotspotautoconnect;
+package com.dfremont.tool.hotspotautoconnect.page;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 import org.openqa.selenium.WebDriver;
 
-public class TestPage extends AbstractPage {
+public class TestPage extends APage {
 
 	final String search = "input[name='q']";
 

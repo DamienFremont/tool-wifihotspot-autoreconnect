@@ -1,16 +1,16 @@
-package com.dfremont.tool.hotspotautoconnect;
+package com.dfremont.tool.hotspotautoconnect.page;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 import org.openqa.selenium.WebDriver;
 
-public class SFRLogonPage extends AbstractPage {
+public class SFRLogonPage extends APage {
 
-	final String login = "#login";
-	final String password = "#password";
-	final String conditions = "#conditions";
-	final String connexion = "input[name='connexion']";
-	final String already = "already";
+	public final String login = "#login";
+	public final String password = "#password";
+	public final String conditions = "#conditions";
+	public final String connexion = "input[name='connexion']";
+	public final String already = "already";
 
 	public SFRLogonPage(WebDriver driver) {
 		super(driver);
