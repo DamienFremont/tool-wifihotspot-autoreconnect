@@ -1,6 +1,6 @@
-package com.dfremont.seleniumtemplate;
+package com.dfremont.seleniumtemplate.bdd;
 
 //TODO
-public class WebScenario {
+public class Scenario {
 
 }
