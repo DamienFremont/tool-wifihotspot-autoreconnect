@@ -1,37 +1,30 @@
 package com.dfremont.tool.hotspotautoconnect;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
-import com.dfremont.tool.hotspotautoconnect.page.SFRLogonPage;
-import com.dfremont.tool.hotspotautoconnect.page.TestPage;
+import com.dfremont.seleniumtemplate.WebTest;
+import com.dfremont.seleniumtemplate.phantomjs.PhantomJsWebDriverFactory;
 
 // TODO hide driver
 // TODO add rule to kill embedded Browser
-public class SFRAutoConnectTest extends ATest {
-
-	protected void waitUntilUrlAsChanged() {
-		final String previousURL = driver.getCurrentUrl();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		ExpectedCondition<Boolean> e = new ExpectedCondition<Boolean>() {
-			public Boolean apply(WebDriver d) {
-				return (d.getCurrentUrl() != previousURL);
-			}
-		};
-		wait.until(e);
-	}
+public class SFRAutoConnectWebTest extends WebTest {
 
 	// LOGIN
 
 	String USERNAME;
 	String PASSWORD;
+
+	@Override
+	protected WebDriver getDriver() {
+		return new PhantomJsWebDriverFactory().get();
+	}
 
 	@Override
 	public void setUp() throws Exception {
@@ -50,8 +43,8 @@ public class SFRAutoConnectTest extends ATest {
 
 	@Test
 	public void test_SFR_Wifi() throws Exception {
-		SFRLogonPage page = new SFRLogonPage(driver);
-		TestPage test = new TestPage(driver);
+		SFRLogonWebPage page = new SFRLogonWebPage(driver);
+		TestWebPage test = new TestWebPage(driver);
 
 		driver.get(page.getUrl());
 		assertTrue(page.isAt());
@@ -63,7 +56,7 @@ public class SFRAutoConnectTest extends ATest {
 		if (driver.getCurrentUrl().contains(page.already)) {
 
 			fail("deja connecte!");
-			
+
 		} else {
 
 			assertTrue(page.isError());

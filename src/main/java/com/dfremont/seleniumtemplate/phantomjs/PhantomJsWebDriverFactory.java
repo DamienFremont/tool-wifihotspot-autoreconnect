@@ -1,4 +1,4 @@
-package com.dfremont.tool.hotspotautoconnect;
+package com.dfremont.seleniumtemplate.phantomjs;
 
 import java.io.File;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class WebDriverFactory {
+public class PhantomJsWebDriverFactory {
 
 	public WebDriver get() {
 		

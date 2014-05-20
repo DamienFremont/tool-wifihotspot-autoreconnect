@@ -1,14 +1,14 @@
-package com.dfremont.tool.hotspotautoconnect.page;
+package com.dfremont.seleniumtemplate;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public abstract class APage {
+public abstract class WebPage {
 
 	protected WebDriver driver;
 
-	public APage(WebDriver driver) {
+	public WebPage(WebDriver driver) {
 		this.driver = driver;
 	}
 
