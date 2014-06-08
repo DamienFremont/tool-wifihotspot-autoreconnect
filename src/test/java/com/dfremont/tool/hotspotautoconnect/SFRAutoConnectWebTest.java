@@ -1,13 +1,18 @@
 package com.dfremont.tool.hotspotautoconnect;
 
+import static java.lang.System.out;
+import static java.lang.Thread.sleep;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Properties;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.browserlaunchers.Sleeper;
 
 import com.dfremont.seleniumtemplate.WebTest;
 import com.dfremont.seleniumtemplate.phantomjs.PhantomJsWebDriverFactory;
@@ -40,9 +45,33 @@ public class SFRAutoConnectWebTest extends WebTest {
 	}
 
 	// TEST
+	// TODO add log api
 
 	@Test
 	public void test_SFR_Wifi() throws Exception {
+		while (true) {
+			try {
+
+				out.println(new Date() + " : " + "login start");
+				logonSFRWifi();
+				out.println(new Date() + " : " + "login success ");
+
+			} catch (Exception e) {
+				out.println(new Date() + " : " + "login error");
+			}
+
+			out.println(new Date() + " : " + "wait");
+			sleep(millis(2, 5));
+			out.println(new Date() + " : " + "wait stop");
+		}
+	}
+
+	private int millis(int hh, int mm) {
+		return hh * 60 * 60 * 1000 //
+				+ mm * 60 * 60 * 1000;
+	}
+
+	private void logonSFRWifi() {
 		SFRLogonWebPage page = new SFRLogonWebPage(driver);
 		TestWebPage test = new TestWebPage(driver);
 
@@ -61,6 +90,7 @@ public class SFRAutoConnectWebTest extends WebTest {
 
 			assertTrue(page.isError());
 			page.closeError();
+			assertFalse(page.isError());
 
 			page.logon(USERNAME, PASSWORD);
 			waitUntilUrlAsChanged();

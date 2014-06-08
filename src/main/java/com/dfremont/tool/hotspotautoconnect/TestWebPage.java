@@ -1,7 +1,5 @@
 package com.dfremont.tool.hotspotautoconnect;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import org.openqa.selenium.WebDriver;
 
 import com.dfremont.seleniumtemplate.WebPage;
@@ -21,8 +19,7 @@ public class TestWebPage extends WebPage {
 
 	@Override
 	public Boolean isAt() {
-		assertThat(driver.getCurrentUrl()).isEqualTo(getUrl());
-		assertThat(element(search).getAttribute("value")).contains("toto666");
-		return true;
+		return driver.getCurrentUrl().equals(getUrl()) //
+				&& element(search).getAttribute("value").contains("toto666");
 	}
 }

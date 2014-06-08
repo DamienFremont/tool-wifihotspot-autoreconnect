@@ -1,7 +1,5 @@
 package com.dfremont.tool.hotspotautoconnect;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import org.openqa.selenium.WebDriver;
 
 import com.dfremont.seleniumtemplate.WebPage;
@@ -25,9 +23,8 @@ public class SFRLogonWebPage extends WebPage {
 
 	@Override
 	public Boolean isAt() {
-		assertThat(driver.getCurrentUrl()).contains(getUrl());
-		assertThat(element(".headerSFR").isDisplayed()).isTrue();
-		return true;
+		return driver.getCurrentUrl().contains(getUrl()) //
+				&& element(".headerSFR").isDisplayed();
 	}
 
 	public void logon(String usr, String pwd) {
@@ -37,15 +34,13 @@ public class SFRLogonWebPage extends WebPage {
 		element(connexion).click();
 	}
 
-	public boolean isError() {
-		assertThat(element("#box").isDisplayed()).isTrue();
-		assertThat(element("#contenuBox").getText()).contains("ERREUR");
-		return true;
+	public Boolean isError() {
+		return element("#box").isDisplayed() //
+				&& element("#contenuBox").getText().contains("ERREUR");
 	}
 
 	public void closeError() {
 		element("#fermerBox a").click();
-		assertThat(element("#box").isDisplayed()).isFalse();
 	}
 
 }
