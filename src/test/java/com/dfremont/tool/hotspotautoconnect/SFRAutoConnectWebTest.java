@@ -4,7 +4,6 @@ import static java.lang.System.out;
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -12,7 +11,6 @@ import java.util.Properties;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.browserlaunchers.Sleeper;
 
 import com.dfremont.seleniumtemplate.WebTest;
 import com.dfremont.seleniumtemplate.phantomjs.PhantomJsWebDriverFactory;
@@ -61,14 +59,14 @@ public class SFRAutoConnectWebTest extends WebTest {
 			}
 
 			out.println(new Date() + " : " + "wait");
-			sleep(millis(2, 5));
+			sleep(millis(2, 2));
 			out.println(new Date() + " : " + "wait stop");
 		}
 	}
 
 	private int millis(int hh, int mm) {
 		return hh * 60 * 60 * 1000 //
-				+ mm * 60 * 60 * 1000;
+				+ mm * 60 * 1000;
 	}
 
 	private void logonSFRWifi() {
@@ -84,7 +82,7 @@ public class SFRAutoConnectWebTest extends WebTest {
 
 		if (driver.getCurrentUrl().contains(page.already)) {
 
-			fail("deja connecte!");
+			out.println("deja connecte!");
 
 		} else {
 
