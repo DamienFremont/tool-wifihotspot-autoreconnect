@@ -59,14 +59,14 @@ public class SFRAutoConnectWebTest extends WebTest {
 			}
 
 			out.println(new Date() + " : " + "wait");
-			sleep(millis(2, 2));
+			sleep(millis(2, 1));
 			out.println(new Date() + " : " + "wait stop");
 		}
 	}
 
 	private int millis(int hh, int mm) {
-		return hh * 60 * 60 * 1000 //
-				+ mm * 60 * 1000;
+		return (hh * 60 * 60 * 1000) //
+				+ (mm * 60 * 1000);
 	}
 
 	private void logonSFRWifi() {
