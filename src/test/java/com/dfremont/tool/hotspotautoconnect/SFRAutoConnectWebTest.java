@@ -59,7 +59,7 @@ public class SFRAutoConnectWebTest extends WebTest {
 			}
 
 			out.println(new Date() + " : " + "wait");
-			sleep(millis(2, 1));
+			sleep(millis(2, 0));
 			out.println(new Date() + " : " + "wait stop");
 		}
 	}
